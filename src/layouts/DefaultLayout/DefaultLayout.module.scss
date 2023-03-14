@@ -1,0 +1,14 @@
+.wrapper {
+    position: relative;
+}
+
+.content {
+    display: flex;
+    width: var(--web-width);
+    margin: 0 auto;
+}
+
+.main {
+    flex: 1;
+    padding: 24px 0 0 24px;
+}

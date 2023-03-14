@@ -1,0 +1,65 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900;1000&display=swap');
+
+:root {
+    --web-width: 1200px;
+    --header-height: 56px;
+    --sidebar-width: 15%;
+
+    // Colors
+    --primary-color: #6a5af9;
+    --white-color: #ffffff;
+    --black-color: #2d2727;
+    --text-color: #2c3333;
+    --red-color: #e21818;
+    --green-color: #5d9c59;
+    --blue-color: #3e54ac;
+    --yellow-color: #f9f54b;
+    --orange-color: #f99417;
+    --grey-color: #73777b;
+    --border-color: #ececec;
+
+    // Fonts
+    --primary-font: 'Mulish', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--primary-font);
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizespeed;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+// Scrollbar
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 6px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
