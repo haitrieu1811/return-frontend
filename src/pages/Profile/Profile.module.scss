@@ -1,0 +1,66 @@
+.wrapper {
+    position: relative;
+}
+
+.info {
+    display: flex;
+    align-items: flex-start;
+    background-color: var(--grey-blur-color);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.avatar {
+    --size: 240px;
+    width: var(--size);
+    height: var(--size);
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.info-list {
+    flex: 1;
+    margin-left: 24px;
+}
+
+.firstName {
+    font-size: 5rem;
+    line-height: 1.2;
+}
+
+.lastName {
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.statistics {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+}
+
+.statistic {
+    + .statistic {
+        margin-left: 36px;
+    }
+}
+
+.statistic-label {
+    font-size: 1.4rem;
+}
+
+.statistic-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.update {
+    padding: 8px;
+    cursor: pointer;
+}

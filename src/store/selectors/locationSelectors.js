@@ -1,5 +1,5 @@
-export const provinceSelector = (state) => state.location.provinces;
+export const provinces = (state) => state.location.provinces;
 
-export const districtSelector = (state) => state.location.districts;
+export const districts = (state) => state.location.districts;
 
-export const wardSelector = (state) => state.location.wards;
+export const wards = (state) => state.location.wards;

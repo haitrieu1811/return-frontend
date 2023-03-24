@@ -1,0 +1,31 @@
+.table {
+    width: 100%;
+    font-size: 1.5rem;
+
+    thead {
+        td {
+            background-color: var(--grey-blur-color);
+            font-weight: 600;
+            padding: 12px;
+            color: var(--black-color);
+        }
+    }
+
+    tbody {
+        td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 12px;
+            color: var(--text-color);
+
+            button {
+                padding: 4px 8px;
+                font-size: 1.3rem;
+            }
+        }
+    }
+}
+
+.button-separate {
+    display: inline-block;
+    margin-right: 6px;
+}

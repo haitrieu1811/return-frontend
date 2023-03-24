@@ -1,7 +1,9 @@
 .wrapper {
     height: var(--header-height);
     background-color: var(--white-color);
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
 }
 
 .main {
@@ -13,14 +15,13 @@
 }
 
 .search {
-    --search-icon-width: 40px;
-    --clear-icon-width: 40px;
-    --filter-width: 500px;
+    --search-icon-width: 50px;
+    --clear-icon-width: 50px;
 
     position: relative;
     display: flex;
     align-items: center;
-    border-radius: 4px;
+    border-radius: 32px;
 }
 
 .search-icon {
@@ -32,15 +33,17 @@
 
 .search-box {
     outline: none;
-    border: 2px solid var(--border-color);
+    border: 2px solid transparent;
     border-radius: inherit;
-    width: var(--filter-width);
+    width: 360px;
     padding: 8px var(--clear-icon-width) 8px var(--search-icon-width);
+    background-color: var(--grey-blur-color);
     font-size: 1.4rem;
     transition: 0.1s linear;
+    caret-color: var(--primary-color);
 
     &:focus {
-        border-color: var(--primary-color);
+        border-color: var(--border-color);
     }
 }
 
@@ -59,17 +62,6 @@
             color: #e74c3c;
         }
     }
-}
-
-.filter {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    width: var(--filter-width);
-    background-color: var(--white-color);
-    border-radius: 4px;
-    border: 2px solid var(--border-color);
-    min-height: 240px;
 }
 
 .actions {
@@ -93,4 +85,18 @@
     &:hover {
         opacity: 0.8;
     }
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.avatar {
+    --size: 34px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    object-fit: cover;
 }

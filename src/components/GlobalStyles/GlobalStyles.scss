@@ -1,9 +1,9 @@
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900;1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Lexend+Deca:wght@300;400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700;800;900;1000&family=Roboto+Mono:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&family=Sarabun:wght@300;400;500;600;700;800&display=swap');
 
 :root {
     --web-width: 1200px;
-    --header-height: 56px;
+    --header-height: 60px;
     --sidebar-width: 15%;
 
     // Colors
@@ -17,10 +17,11 @@
     --yellow-color: #f9f54b;
     --orange-color: #f99417;
     --grey-color: #73777b;
-    --border-color: #ececec;
+    --grey-blur-color: rgb(149, 165, 166, 0.1);
+    --border-color: #e8ebed;
 
     // Fonts
-    --primary-font: 'Mulish', sans-serif;
+    --primary-font: 'Sarabun', sans-serif;
 }
 
 * {

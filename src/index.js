@@ -1,17 +1,31 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import GlobalStyles from './components/GlobalStyles';
+import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
-import reduxStore from './redux';
+import reduxStore, { persistor } from './redux';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={reduxStore}>
         <GlobalStyles>
-            <App />
+            <App persistor={persistor} />
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </GlobalStyles>
     </Provider>,
 );
