@@ -15,8 +15,8 @@ root.render(
         <GlobalStyles>
             <App persistor={persistor} />
             <ToastContainer
-                position="bottom-right"
-                autoClose={3000}
+                position="bottom-left"
+                autoClose={2000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -24,7 +24,7 @@ root.render(
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                theme="light"
+                theme="dark"
             />
         </GlobalStyles>
     </Provider>,

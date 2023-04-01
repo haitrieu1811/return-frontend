@@ -9,7 +9,7 @@ const NoSidebar = ({ children }) => {
     return (
         <div className={cx('wrapper')}>
             <Header />
-            <div className={cx('content')}>{children}</div>
+            <main className={cx('content')}>{children}</main>
         </div>
     );
 };

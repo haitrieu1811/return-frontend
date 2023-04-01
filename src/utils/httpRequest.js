@@ -19,7 +19,7 @@ export const put = async (url, data) => {
     return response.data;
 };
 
-export const remove = async (url, options = {}) => {
+export const destroy = async (url, options = {}) => {
     const response = await httpRequest.delete(url, options);
     return response.data;
 };

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Chats from '../components/Chats/Chats';
 import styles from './DefaultLayout.module.scss';
+import BackToTop from '../components/BackToTop';
 
 const cx = classNames.bind(styles);
 
@@ -13,8 +15,11 @@ const DefaultLayout = ({ children }) => {
             <Header />
             <div className={cx('content')}>
                 <Sidebar />
-                <div className={cx('main')}>{children}</div>
+                <main className={cx('main')}>{children}</main>
+                <Chats />
             </div>
+
+            <BackToTop />
         </div>
     );
 };

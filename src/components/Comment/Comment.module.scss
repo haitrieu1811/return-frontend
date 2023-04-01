@@ -1,0 +1,30 @@
+.wrapper {
+    position: relative;
+}
+
+.list {
+    max-height: 480px;
+    overflow-y: overlay;
+}
+
+.add {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.avatar-link {
+    margin-right: 16px;
+}
+
+.avatar {
+    --size: 35px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.input {
+    flex: 1;
+}

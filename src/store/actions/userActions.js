@@ -74,7 +74,7 @@ export const userLogoutSuccess = () => ({
 });
 
 // Update
-export const userUpdateStart = (data) => {
+export const userUpdateStart = (data, userId) => {
     return async (dispatch, setState) => {
         try {
             const res = await userServices.handleUpdate(data);
@@ -82,6 +82,7 @@ export const userUpdateStart = (data) => {
             if (res && res.errCode === 0) {
                 toast.success(res.message);
                 dispatch(userUpdateSuccess(res.data));
+                dispatch(readUserProfilePageStart(userId));
             } else {
                 toast.error(res.message);
                 dispatch(userUpdateFail());
@@ -100,4 +101,86 @@ export const userUpdateSuccess = (payload) => ({
 
 export const userUpdateFail = () => ({
     type: actionTypes.USER_UPDATE_FAIL,
+});
+
+// Delete
+export const deleteUserStart = (userId) => {
+    return async (dispatch, setState) => {
+        try {
+            const res = await userServices.handleDelete(userId);
+
+            if (res && res.errCode === 0) {
+                await dispatch(deleteUserSuccess());
+                await dispatch(readUsersStart());
+                toast.success(res.message);
+            } else {
+                toast.error(res.message);
+                dispatch(deleteUserFail());
+            }
+        } catch (e) {
+            toast.error(e);
+            dispatch(deleteUserFail());
+            console.log(e);
+        }
+    };
+};
+
+export const deleteUserSuccess = () => ({
+    type: actionTypes.DELETE_USER_SUCCESS,
+});
+
+export const deleteUserFail = () => ({
+    type: actionTypes.DELETE_USER_FAIL,
+});
+
+// Read list users
+export const readUsersStart = () => {
+    return async (dispatch, setState) => {
+        try {
+            dispatch({ type: actionTypes.READ_LIST_USERS_START });
+
+            const res = await userServices.getAllUsers();
+
+            if (res && res.errCode === 0) {
+                dispatch(readUserSuccess(res.data));
+            }
+        } catch (e) {
+            dispatch(readUsersFail());
+            console.log(e);
+        }
+    };
+};
+
+export const readUserSuccess = (payload) => ({
+    type: actionTypes.READ_LIST_USERS_SUCCESS,
+    payload,
+});
+
+export const readUsersFail = () => ({
+    type: actionTypes.READ_LIST_USERS_FAIL,
+});
+
+// Read user profile page
+export const readUserProfilePageStart = (userId) => {
+    return async (dispatch) => {
+        try {
+            const res = await userServices.getUserById(userId);
+            if (res && res.errCode === 0) {
+                dispatch(readUserProfilePageSuccess(res.data));
+            } else {
+                dispatch(readUserProfilePageFail());
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const readUserProfilePageSuccess = (payload) => ({
+    type: actionTypes.READ_USER_PROFILE_PAGE_SUCCESS,
+    payload,
+});
+
+export const readUserProfilePageFail = () => ({
+    type: actionTypes.READ_USER_PROFILE_PAGE_FAIL,
 });

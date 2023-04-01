@@ -6,7 +6,7 @@ import styles from './OnlyContent.module.scss';
 const cx = classNames.bind(styles);
 
 const OnlyContent = ({ children }) => {
-    return <div className={cx('wrapper')}>{children}</div>;
+    return <main className={cx('wrapper')}>{children}</main>;
 };
 
 OnlyContent.propTypes = {

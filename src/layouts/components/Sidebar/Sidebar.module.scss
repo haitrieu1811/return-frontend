@@ -1,5 +1,7 @@
 .wrapper {
     width: var(--sidebar-width);
+    position: sticky;
+    top: var(--header-height);
 }
 
 .list {
@@ -12,8 +14,9 @@
     padding: 12px;
     display: flex;
     align-items: center;
-    border-radius: 4px;
+    border-radius: 8px;
     color: var(--text-color);
+    transition: all 0.1s ease-in-out;
 
     + .item {
         margin-top: 4px;
@@ -25,7 +28,11 @@
     }
 
     &.active {
-        background-color: rgba(128, 128, 128, 0.1);
+        background-color: var(--grey-blur-color);
         color: var(--primary-color);
+    }
+
+    &:hover {
+        background-color: var(--grey-blur-color);
     }
 }

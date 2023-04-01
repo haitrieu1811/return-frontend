@@ -65,7 +65,7 @@ const UpdateForm = ({ userId }) => {
                 email: user.email,
             };
 
-            dispatch(actions.userUpdateStart(data));
+            dispatch(actions.userUpdateStart(data, userId));
         });
     })();
 

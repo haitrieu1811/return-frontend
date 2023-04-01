@@ -1,11 +1,12 @@
 import actionTypes from '../actions/actionTypes';
 
 const initState = {
-    // isLoadingRegister: false,
-    // isRegisterSuccess: false,
-
     isLoggedIn: false,
+    isLoadingRead: false,
     userLoggedIn: null,
+
+    listUsers: [],
+    userProfilePage: [],
 };
 
 const userReducer = (state = initState, action) => {
@@ -13,18 +14,13 @@ const userReducer = (state = initState, action) => {
         // Register
         case actionTypes.USER_REGISTER_START:
             console.log('>>> USER_REGISTER_START');
-            return {
-                ...state,
-                // isLoadingRegister: true,
-                // isRegisterSuccess: false,
-            };
+            return state;
 
         case actionTypes.USER_REGISTER_SUCCESS:
             console.log('>>> USER_REGISTER_SUCCESS');
             return {
                 ...state,
                 isLoadingRegister: false,
-                // isRegisterSuccess: true,
                 registerMessage: action.payload,
             };
 
@@ -32,8 +28,6 @@ const userReducer = (state = initState, action) => {
             console.log('>>> USER_REGISTER_FAIL');
             return {
                 ...state,
-                // isLoadingRegister: false,
-                // isRegisterSuccess: false,
                 registerMessage: action.payload,
             };
 
@@ -84,6 +78,45 @@ const userReducer = (state = initState, action) => {
 
         case actionTypes.USER_UPDATE_FAIL:
             console.log('>>> USER_UPDATE_FAIL');
+            return state;
+
+        // Read list users
+        case actionTypes.READ_LIST_USERS_START:
+            console.log('>>> READ_LIST_USERS_START');
+            return {
+                ...state,
+                isLoadingRead: true,
+            };
+
+        case actionTypes.READ_LIST_USERS_SUCCESS:
+            console.log('>>> READ_LIST_USERS_SUCCESS');
+            return {
+                ...state,
+                users: action.payload,
+                isLoadingRead: false,
+            };
+
+        case actionTypes.READ_LIST_USERS_FAIL:
+            console.log('>>> READ_LIST_USERS_FAIL');
+            return {
+                ...state,
+                isLoadingRead: false,
+            };
+
+        // Read user of profile page
+        case actionTypes.READ_USER_PROFILE_PAGE_START:
+            console.log('>>> READ_USER_PROFILE_PAGE_START');
+            return state;
+
+        case actionTypes.READ_USER_PROFILE_PAGE_SUCCESS:
+            console.log('>>> READ_USER_PROFILE_PAGE_SUCCESS');
+            return {
+                ...state,
+                userProfilePage: action.payload,
+            };
+
+        case actionTypes.READ_USER_PROFILE_PAGE_FAIL:
+            console.log('>>> READ_USER_PROFILE_PAGE_FAIL');
             return state;
 
         default:

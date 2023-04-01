@@ -1,0 +1,19 @@
+.wrapper {
+    --size: 40px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 9;
+}
+
+.icon {
+    color: var(--white-color);
+}

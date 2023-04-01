@@ -2,13 +2,15 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Lexend+Deca:wght@300;400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700;800;900;1000&family=Roboto+Mono:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&family=Sarabun:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --web-width: 1200px;
+    --web-width: 1100px;
     --header-height: 60px;
-    --sidebar-width: 15%;
+    --sidebar-width: 20%;
 
     // Colors
     --primary-color: #6a5af9;
+    --primary-color: #1677ff;
     --white-color: #ffffff;
+    --background-color: #f8f8f8;
     --black-color: #2d2727;
     --text-color: #2c3333;
     --red-color: #e21818;
@@ -31,6 +33,11 @@
     font-family: var(--primary-font);
 }
 
+*::selection {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
 html {
     font-size: 62.5%;
 }
@@ -39,6 +46,7 @@ body {
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizespeed;
+    overflow: overlay;
 }
 
 a {

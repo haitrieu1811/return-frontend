@@ -12,7 +12,7 @@ const Dashboard = ({ children }) => {
             <Header />
             <div className={cx('content')}>
                 <SidebarDashboard />
-                <div className={cx('main')}>{children}</div>
+                <main className={cx('main')}>{children}</main>
             </div>
         </div>
     );

@@ -5,7 +5,7 @@
 .content {
     display: flex;
     width: var(--web-width);
-    margin: 0 auto;
+    margin: var(--header-height) auto 0;
 }
 
 .main {

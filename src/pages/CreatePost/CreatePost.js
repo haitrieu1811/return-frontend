@@ -22,12 +22,10 @@ const CreatePost = () => {
     const userId = useSelector(selectors.userLoggedIn).id;
     const isSuccess = useSelector(selectors.isCreatePostSuccess);
 
-    const [title, setTittle] = useState('');
-    const [description, setDescription] = useState('');
     const [address, setAddress] = useState('');
     const [content, setContent] = useState('');
-    const [thumbnail, setThumbnail] = useState('');
-    const [previewImage, setPreviewImage] = useState('');
+    const [previewImages, setPreviewImages] = useState([]);
+    const [photos, setPhotos] = useState([]);
 
     const [provinceId, setProvinceId] = useState(undefined);
     const [districtId, setDistrictId] = useState(undefined);
@@ -41,6 +39,7 @@ const CreatePost = () => {
     const [districtsOptions, setDistrictsOptions] = useState([]);
     const [wardsOptions, setWardsOptions] = useState([]);
 
+    // Get all provinces
     useEffect(() => {
         (async () => {
             const res = await locationServices.getAllProvinces();
@@ -48,6 +47,7 @@ const CreatePost = () => {
         })();
     }, []);
 
+    // Set province options
     useEffect(() => {
         setProvincesOptions(
             provinces.map((province) => ({
@@ -57,6 +57,7 @@ const CreatePost = () => {
         );
     }, [provinces]);
 
+    // Get all districts
     useEffect(() => {
         (async () => {
             const res = await locationServices.getListDistricts(provinceId);
@@ -64,6 +65,7 @@ const CreatePost = () => {
         })();
     }, [provinceId]);
 
+    // Set district options
     useEffect(() => {
         setDistrictsOptions(
             districts.map((district) => ({
@@ -73,6 +75,7 @@ const CreatePost = () => {
         );
     }, [districts]);
 
+    // Get all wards
     useEffect(() => {
         (async () => {
             const res = await locationServices.getListWards(provinceId, districtId);
@@ -80,6 +83,7 @@ const CreatePost = () => {
         })();
     }, [provinceId, districtId]);
 
+    // Set ward options
     useEffect(() => {
         setWardsOptions(
             wards.map((ward) => ({
@@ -89,29 +93,54 @@ const CreatePost = () => {
         );
     }, [wards]);
 
-    // Handle
+    // Handle change province
     const handleChangeProvince = (value) => {
         setProvinceId(value);
     };
 
+    // Handle change district
     const handleChangeDistrict = (value) => {
         setDistrictId(value);
     };
 
+    // Handle change ward
     const handleChangeWard = (value) => {
         setWardId(value);
     };
 
+    // Handle change photos
     const handleChangeThumbnail = async (e) => {
-        const file = e.target.files[0];
-        const imageBase64 = await CommonUtils.getBase64(file);
-        const urlPreviewImage = URL.createObjectURL(file);
-        setPreviewImage(urlPreviewImage);
-        setThumbnail(imageBase64);
+        const files = e.target.files;
+        const filesLength = e.target.files.length;
+        const imagesBase64 = [];
+        const urlPreviewImages = [];
+
+        for (let i = 0; i < filesLength; i++) {
+            const file = files[i];
+            const imageBase64 = await CommonUtils.getBase64(file);
+            const urlPreviewImage = URL.createObjectURL(file);
+
+            imagesBase64.push(imageBase64);
+            urlPreviewImages.push(urlPreviewImage);
+        }
+
+        setPreviewImages(urlPreviewImages);
+        setPhotos(imagesBase64);
     };
 
+    // Handle create post
     const handleCreatePost = () => {
-        const data = { title, description, address, content, provinceId, districtId, wardId, userId, thumbnail };
+        const data = {
+            address,
+            content,
+            provinceId,
+            districtId,
+            wardId,
+            userId,
+            status: 'pending',
+            photos,
+        };
+
         dispatch(actions.createPostStart(data));
     };
 
@@ -120,23 +149,27 @@ const CreatePost = () => {
             {/* Photos */}
             <div className={cx('photos')}>
                 <div className={cx('photo')}>
-                    {previewImage && (
-                        <div className={cx('preview')}>
-                            <img src={previewImage} alt="" />
-                        </div>
-                    )}
+                    {previewImages &&
+                        previewImages.length > 0 &&
+                        previewImages.map((image, index) => (
+                            <div key={index} className={cx('preview')}>
+                                <img src={image} alt="" />
+                            </div>
+                        ))}
 
                     <label htmlFor="thumbnail">
                         <div className={cx('upload')}>
                             <FontAwesomeIcon icon={faCloudArrowUp} className={cx('upload-icon')} />
-                            <span className={cx('upload-text')}>Tải ảnh bìa</span>
+                            <span className={cx('upload-text')}>Tải hình ảnh</span>
                         </div>
                     </label>
+
                     <input
                         type="file"
                         name="thumbnail"
                         id="thumbnail"
                         onChange={(e) => handleChangeThumbnail(e)}
+                        multiple
                         hidden
                     />
                 </div>
@@ -144,31 +177,6 @@ const CreatePost = () => {
 
             {/* Form */}
             <div className={cx('form')}>
-                {/* Title */}
-                <div className={cx('group')} style={{ '--columns': 1 }}>
-                    <div className={cx('item')}>
-                        <label className={cx('label')} htmlFor="title">
-                            Tiêu đề
-                        </label>
-                        <Input name="title" id="title" value={title} onChange={(e) => setTittle(e.target.value)} />
-                    </div>
-                </div>
-
-                {/* Description */}
-                <div className={cx('group')} style={{ '--columns': 1 }}>
-                    <div className={cx('item')}>
-                        <label className={cx('label')} htmlFor="description">
-                            Mô tả
-                        </label>
-                        <Input
-                            name="description"
-                            id="description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </div>
-                </div>
-
                 {/* Provine, district, ward */}
                 <div className={cx('group')} style={{ '--columns': 3 }}>
                     {/* Province */}

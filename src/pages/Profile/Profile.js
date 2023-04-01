@@ -1,68 +1,68 @@
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Buffer } from 'buffer';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import React, { Suspense } from 'react';
 
 import DefaultAvatar from '~/assets/images/default-avatar.jpg';
 import Button from '~/components/Button';
 import Modal from '~/components/Modal';
 import UpdateForm from '~/components/UpdateForm';
 import { emitter } from '~/emitter';
-import * as userServices from '~/services/userServices';
 import * as postServices from '~/services/postServices';
+import * as userServices from '~/services/userServices';
 import * as selectors from '~/store/selectors';
-import GridStyles from '~/components/GridStyles';
+import * as actions from '~/store/actions';
+import CommonUtils from '~/utils/CommonUtils';
 import styles from './Profile.module.scss';
+import Skeleton from '~/components/Skeleton';
 
 const Post = React.lazy(() => import('~/components/Post'));
 
 const cx = classNames.bind(styles);
 
 const Profile = () => {
+    const dispatch = useDispatch();
+
     const { userId } = useParams();
 
     const userLoggedIn = useSelector(selectors.userLoggedIn);
+    const userProfilePage = useSelector(selectors.userProfilePage);
+    const reduxPostsOfUser = useSelector(selectors.listPostsOfUser);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [user, setUser] = useState({});
     const [avatar, setAvatar] = useState(DefaultAvatar);
-
     const [posts, setPosts] = useState([]);
 
+    // Set user
     useEffect(() => {
-        (async () => {
-            const res = await userServices.getUserById(userId);
+        dispatch(actions.readUserProfilePageStart(userId));
+    }, [dispatch, userId]);
 
-            if (res && res.errCode === 0) {
-                setUser(res.data);
-            }
-        })();
-    }, [userId]);
+    useEffect(() => {
+        setUser(userProfilePage);
+    }, [userProfilePage]);
 
+    // Set avatar
     useEffect(() => {
         if (user.avatar) {
-            const avatar = new Buffer(user.avatar, 'base64').toString('binary');
+            const avatar = CommonUtils.renderImage(user.avatar);
             setAvatar(avatar);
         }
     }, [user.avatar]);
 
     // Posts
     useEffect(() => {
-        (async () => {
-            const res = await postServices.getListPosts(userId);
-            console.log(res);
-            if (res && res.errCode === 0) setPosts(res.data);
-        })();
-    }, [userId]);
+        dispatch(actions.readPostsOfUserStart(userId));
+    }, [dispatch, userId]);
 
-    emitter.on('HANDLE_UPDATE_AVATAR_PARENTS', () => {
-        console.log('>>> Data from child: ');
-    });
+    useEffect(() => {
+        setPosts(reduxPostsOfUser);
+    }, [reduxPostsOfUser]);
 
+    // Handle
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -76,7 +76,7 @@ const Profile = () => {
     };
 
     return (
-        <GridStyles>
+        <>
             {user && (
                 <div className={cx('wrapper')}>
                     <div className={cx('info')}>
@@ -110,19 +110,13 @@ const Profile = () => {
                         )}
                     </div>
 
-                    {posts && posts.length > 0 && (
-                        <div className="grid">
-                            <div className="row">
-                                {posts.map((post) => (
-                                    <div key={post.id} className="col l-4 m-4 c-12">
-                                        <Suspense fallback={<p>Loading</p>}>
-                                            <Post data={post} />
-                                        </Suspense>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                    {posts &&
+                        posts.length > 0 &&
+                        posts.map((post) => (
+                            <Suspense key={post.id} fallback={<Skeleton />}>
+                                <Post postData={post} />
+                            </Suspense>
+                        ))}
                 </div>
             )}
 
@@ -141,7 +135,7 @@ const Profile = () => {
                     </Modal>
                 </>
             )}
-        </GridStyles>
+        </>
     );
 };
 

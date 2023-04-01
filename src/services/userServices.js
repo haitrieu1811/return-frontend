@@ -41,9 +41,23 @@ export const getUserById = async (userId) => {
     }
 };
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (page) => {
     try {
         const res = await httpRequest.get('user/get-all');
+        return res;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const handleDelete = async (userId) => {
+    try {
+        const res = await httpRequest.destroy('user/delete', {
+            data: {
+                userId,
+            },
+        });
+
         return res;
     } catch (e) {
         console.log(e);

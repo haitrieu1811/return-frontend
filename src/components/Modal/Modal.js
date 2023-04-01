@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 
-const CompModal = ({ title, children, open, onCancel, width = 520, onOk, cancelText, okText }) => {
+const CompModal = ({ title, children, open, onCancel, width = 520, onOk, cancelText, okText, footer }) => {
     return (
         <Modal
             title={title}
@@ -10,6 +10,7 @@ const CompModal = ({ title, children, open, onCancel, width = 520, onOk, cancelT
             onOk={onOk}
             cancelText={cancelText}
             okText={okText}
+            footer={footer}
             centered
         >
             {children}
