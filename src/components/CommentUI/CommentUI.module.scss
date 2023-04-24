@@ -1,0 +1,139 @@
+.wrapper {
+    --avatar-size: 35px;
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 0;
+
+    &.reply {
+        --avatar-size: 30px;
+
+        border-left: 2px solid var(--primary-color);
+        padding-left: 24px;
+        margin-left: calc(var(--avatar-size) / 2);
+
+        .name,
+        .comment {
+            font-size: 1.4rem;
+        }
+    }
+
+    &:hover .options {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+.avatar-link {
+    margin-right: 12px;
+}
+
+.avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.content {
+    position: relative;
+}
+
+.info {
+    background-color: var(--grey-blur-color);
+    padding: 6px 16px;
+    border-radius: 6px;
+}
+
+.name {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--black-color);
+}
+
+.comment {
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+
+.tag-name {
+    font-weight: 500;
+    margin-right: 4px;
+    color: var(--primary-color);
+
+    &:hover {
+        text-decoration: underline;
+        color: var(--primary-color);
+    }
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-top: 4px;
+}
+
+.action {
+    font-weight: 500;
+    user-select: none;
+    color: var(--grey-color);
+    margin-left: 10px;
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+.created-at {
+    margin-left: 12px;
+    color: var(--grey-color);
+}
+
+.options {
+    --size: 30px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 6px;
+    opacity: 0;
+    pointer-events: none;
+    cursor: pointer;
+
+    &:active {
+        background-color: var(--grey-blur-color);
+        border: 1px solid var(--border-color);
+    }
+}
+
+.options-icon {
+    color: var(--grey-color);
+    font-size: 1.8rem;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        --avatar-size: 30px;
+
+        &.reply {
+            padding-left: 24px;
+            margin-left: 0;
+        }
+    }
+}
+
+@media (max-width: 320px) {
+}

@@ -1,15 +1,36 @@
 .wrapper {
-    position: relative;
+    background-color: var(--white-color);
+    min-height: 100vh;
+    padding-top: var(--header-height);
 }
 
 .content {
     display: flex;
     align-items: flex-start;
     width: var(--web-width);
-    margin: var(--header-height) auto 0;
+    margin: 0 auto;
 }
 
 .main {
     flex: 1;
-    padding: 24px;
+    padding: var(--space-to-header) 48px;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 12px;
+        padding-bottom: calc(24px + var(--mobile-menu-height));
+    }
+}
+
+@media (max-width: 320px) {
 }

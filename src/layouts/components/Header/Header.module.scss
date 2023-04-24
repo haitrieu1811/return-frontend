@@ -1,7 +1,7 @@
 .wrapper {
     height: var(--header-height);
     background-color: var(--white-color);
-    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--header-shadow);
     display: flex;
     align-items: center;
     position: fixed;
@@ -19,56 +19,6 @@
     align-items: center;
 }
 
-.search {
-    --search-icon-width: 50px;
-    --clear-icon-width: 50px;
-
-    position: relative;
-    display: flex;
-    align-items: center;
-    border-radius: 32px;
-}
-
-.search-icon {
-    position: absolute;
-    width: var(--search-icon-width);
-    text-align: center;
-    color: var(--grey-color);
-}
-
-.search-box {
-    outline: none;
-    border: 2px solid transparent;
-    border-radius: inherit;
-    width: 360px;
-    padding: 8px var(--clear-icon-width) 8px var(--search-icon-width);
-    background-color: var(--grey-blur-color);
-    font-size: 1.5rem;
-    transition: 0.1s linear;
-    caret-color: var(--primary-color);
-
-    &:focus {
-        border-color: var(--primary-color);
-    }
-}
-
-.clear-icon {
-    position: absolute;
-    right: 0;
-    width: var(--clear-icon-width);
-    text-align: center;
-    color: var(--grey-color);
-
-    svg {
-        cursor: pointer;
-        transition: 0.15s ease;
-
-        &:hover {
-            color: #e74c3c;
-        }
-    }
-}
-
 .actions {
     display: flex;
     align-items: center;
@@ -81,11 +31,11 @@
 .auth-button {
     display: inline-block;
     padding: 6px 12px;
-    background-color: var(--black-color);
-    color: var(--white-color);
+    background-color: var(--primary-color);
+    color: #ffffff;
     font-size: 1.4rem;
-    font-weight: 600;
-    border-radius: 4px;
+    font-weight: 500;
+    border-radius: 32px;
 
     &:hover {
         opacity: 0.8;
@@ -104,4 +54,26 @@
     height: var(--size);
     border-radius: 50%;
     object-fit: cover;
+}
+
+.menu-icon {
+    margin-right: 12px;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 320px) {
 }

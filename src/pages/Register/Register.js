@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import Background from '~/assets/images/bg.jpg';
 import Logo from '~/components/Logo';
 import * as actions from '~/store/actions';
 import { PATH } from '~/utils/constant';
@@ -12,97 +12,98 @@ import styles from './Register.module.scss';
 const cx = classNames.bind(styles);
 
 const Register = () => {
+    const intl = useIntl();
+    const firstNameTxt = intl.formatMessage({ id: 'auth.firstName' });
+    const lastNameTxt = intl.formatMessage({ id: 'auth.lastName' });
+    const usernameTxt = intl.formatMessage({ id: 'auth.username' });
+    const passwordTxt = intl.formatMessage({ id: 'auth.password' });
+    const passwordConfirmTxt = intl.formatMessage({ id: 'auth.passwordConfirm' });
+
     const dispatch = useDispatch();
 
-    const isRegisterSuccess = useSelector((state) => state.user.isRegisterSuccess);
-    const registerMessage = useSelector((state) => state.user.registerMessage);
-
-    const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-
-    const [registerSuccess, setRegisterSuccess] = useState('');
-
-    useEffect(() => {
-        if (isRegisterSuccess) {
-            setRegisterSuccess(isRegisterSuccess);
-        }
-    }, [isRegisterSuccess]);
-
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleChangePasswordConfirm = (e) => {
-        setPasswordConfirm(e.target.value);
-    };
-
-    const handleClearForm = () => {
-        setEmail('');
-        setPassword('');
-        setPasswordConfirm('');
-    };
 
     const handleSubmitRegister = (e) => {
         e.preventDefault();
 
-        dispatch(actions.userRegisterStart(email, password, passwordConfirm));
-
-        if (registerSuccess) handleClearForm();
+        const data = { firstName, lastName, username, password, passwordConfirm, tick: false, roleId: 2 };
+        dispatch(actions.userRegisterStart(data));
     };
 
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('main')} style={{ backgroundImage: `url(${Background})` }}>
-                <form className={cx('form')} method="POST" onSubmit={handleSubmitRegister}>
+            <div className={cx('main')}>
+                <form className={cx('form')} onSubmit={handleSubmitRegister}>
                     <Logo />
 
+                    {/* FirstName */}
                     <div className={cx('form-group')}>
-                        <label htmlFor="email">Email</label>
                         <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => handleChangeEmail(e)}
+                            type="firstName"
+                            id="firstName"
+                            placeholder={firstNameTxt}
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
                         />
                     </div>
 
+                    {/* LastName */}
                     <div className={cx('form-group')}>
-                        <label htmlFor="password">Mật khẩu</label>
+                        <input
+                            type="lastName"
+                            id="lastName"
+                            placeholder={lastNameTxt}
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                    </div>
+
+                    {/* Username */}
+                    <div className={cx('form-group')}>
+                        <input
+                            type="username"
+                            id="username"
+                            placeholder={usernameTxt}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+
+                    {/* Password */}
+                    <div className={cx('form-group')}>
                         <input
                             type="password"
                             id="password"
-                            name="password"
-                            placeholder="Mật khẩu"
+                            placeholder={passwordTxt}
                             value={password}
-                            onChange={(e) => handleChangePassword(e)}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
+                    {/* Password confirm */}
                     <div className={cx('form-group')}>
-                        <label htmlFor="passwordConfirm">Xác nhận mật khẩu</label>
                         <input
                             type="password"
                             id="passwordConfirm"
-                            name="passwordConfirm"
-                            placeholder="Xác nhận mật khẩu"
+                            placeholder={passwordConfirmTxt}
                             value={passwordConfirm}
-                            onChange={(e) => handleChangePasswordConfirm(e)}
+                            onChange={(e) => setPasswordConfirm(e.target.value)}
                         />
                     </div>
 
                     <button type="submit" className={cx('submit')}>
-                        Đăng kí
+                        <FormattedMessage id="auth.register" />
                     </button>
 
                     <div className={cx('login')}>
-                        Bạn đã có tài khoản? <Link to={PATH.login}>Đăng nhập</Link>
+                        <FormattedMessage id="auth.haveAccount" />{' '}
+                        <Link to={PATH.login}>
+                            <FormattedMessage id="auth.login" />
+                        </Link>
                     </div>
                 </form>
             </div>

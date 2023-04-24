@@ -1,4 +1,5 @@
 import { Buffer } from 'buffer';
+import { useIntl } from 'react-intl';
 
 class CommonUtils {
     static getBase64 = async (file) => {
@@ -11,39 +12,48 @@ class CommonUtils {
     };
 
     static timeSince = (date) => {
+        const intl = useIntl();
+        const yearTxt = intl.formatMessage({ id: 'time.year' });
+        const monthTxt = intl.formatMessage({ id: 'time.month' });
+        const weekTxt = intl.formatMessage({ id: 'time.week' });
+        const dayTxt = intl.formatMessage({ id: 'time.day' });
+        const hourTxt = intl.formatMessage({ id: 'time.hour' });
+        const minuteTxt = intl.formatMessage({ id: 'time.minute' });
+        const secondTxt = intl.formatMessage({ id: 'time.second' });
+
         var seconds = Math.floor((new Date() - date) / 1000);
 
         var interval = seconds / 31536000;
         if (interval > 1) {
-            return Math.floor(interval) + ' năm';
+            return `${Math.floor(interval)} ${yearTxt}`;
         }
 
         interval = seconds / 2592000;
         if (interval > 1) {
-            return Math.floor(interval) + ' tháng';
+            return `${Math.floor(interval)} ${monthTxt}`;
         }
 
         interval = seconds / 604800;
         if (interval > 1) {
-            return Math.floor(interval) + ' tuần';
+            return `${Math.floor(interval)} ${weekTxt}`;
         }
 
         interval = seconds / 86400;
         if (interval > 1) {
-            return Math.floor(interval) + ' ngày';
+            return `${Math.floor(interval)} ${dayTxt}`;
         }
 
         interval = seconds / 3600;
         if (interval > 1) {
-            return Math.floor(interval) + ' giờ';
+            return `${Math.floor(interval)} ${hourTxt}`;
         }
 
         interval = seconds / 60;
         if (interval > 1) {
-            return Math.floor(interval) + ' phút';
+            return `${Math.floor(interval)} ${minuteTxt}`;
         }
 
-        return Math.floor(seconds) + ' giây';
+        return `${Math.floor(interval)} ${secondTxt}`;
     };
 
     static intToString = (number) => {

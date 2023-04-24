@@ -1,0 +1,64 @@
+.wrapper {
+    padding: 12px 0 24px;
+}
+
+.group {
+    --space: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(0px - var(--space));
+
+    + .group {
+        margin-top: 24px;
+    }
+}
+
+.item {
+    width: calc(100% / var(--columns) - var(--space));
+    margin-left: var(--space);
+
+    > .label,
+    > .input {
+        display: block;
+        width: 100%;
+        font-size: 1.5rem;
+        color: var(--text-color);
+    }
+}
+
+.label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--black-color);
+}
+
+.preview {
+    --size: 120px;
+    margin-top: 24px;
+    text-align: center;
+
+    img {
+        width: var(--size);
+        height: var(--size);
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.upload-btn {
+    outline: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 1.4rem;
+    display: block;
+    text-align: center;
+    background-color: var(--grey-blur-color);
+    color: var(--black-color);
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--border-color);
+    }
+}

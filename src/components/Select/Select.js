@@ -1,19 +1,8 @@
 import React from 'react';
 import { Select, Space } from 'antd';
 
-// const handleChange = (value) => {
-//     console.log(`selected ${value}`);
-// };
-
-const CompSelect = ({ options, onChange, className, defaultValue, ...props }) => {
+const CompSelect = ({ options, onChange, className, defaultValue, size, ...props }) => {
     return (
-        // [
-        //     { value: 'jack', label: 'Jack' },
-        //     { value: 'lucy', label: 'Lucy' },
-        //     { value: 'Yiminghe', label: 'yiminghe' },
-        //     { value: 'disabled', label: 'Disabled', disabled: true },
-        // ]
-
         <Space wrap>
             <Select
                 defaultValue={defaultValue}
@@ -21,6 +10,7 @@ const CompSelect = ({ options, onChange, className, defaultValue, ...props }) =>
                 onChange={onChange}
                 options={options}
                 className={className}
+                size={size}
                 {...props}
             />
         </Space>

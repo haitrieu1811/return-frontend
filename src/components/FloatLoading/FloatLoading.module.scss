@@ -1,7 +1,7 @@
 .loading-wp {
     position: fixed;
     inset: 0;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,4 +26,23 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+    .loading {
+        --size: 30px;
+        --border-width: 3px;
+    }
+}
+
+@media (max-width: 320px) {
 }

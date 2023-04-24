@@ -2,16 +2,13 @@ import actionTypes from '../actions/actionTypes';
 
 const initState = {
     isLoggedIn: false,
-    isLoadingRead: false,
-    userLoggedIn: null,
-
-    listUsers: [],
-    userProfilePage: [],
+    userLoggedIn: {},
+    savedPosts: [],
 };
 
 const userReducer = (state = initState, action) => {
     switch (action.type) {
-        // Register
+        // REGISTER
         case actionTypes.USER_REGISTER_START:
             console.log('>>> USER_REGISTER_START');
             return state;
@@ -31,7 +28,7 @@ const userReducer = (state = initState, action) => {
                 registerMessage: action.payload,
             };
 
-        // Login
+        // LOGIN
         case actionTypes.USER_LOGIN_START:
             console.log('>>> USER_LOGIN_START');
             return {
@@ -55,16 +52,16 @@ const userReducer = (state = initState, action) => {
                 userLoggedIn: null,
             };
 
-        // Logout
+        // LOGOUT
         case actionTypes.USER_LOGOUT_SUCCESS:
             console.log('>>> USER_LOGOUT_SUCCESS');
             return {
                 ...state,
                 isLoggedIn: false,
-                userLoggedIn: null,
+                userLoggedIn: {},
             };
 
-        // Update
+        // UPDATE
         case actionTypes.USER_UPDATE_START:
             console.log('>>> USER_UPDATE_START');
             return state;
@@ -80,43 +77,36 @@ const userReducer = (state = initState, action) => {
             console.log('>>> USER_UPDATE_FAIL');
             return state;
 
-        // Read list users
-        case actionTypes.READ_LIST_USERS_START:
-            console.log('>>> READ_LIST_USERS_START');
-            return {
-                ...state,
-                isLoadingRead: true,
-            };
-
-        case actionTypes.READ_LIST_USERS_SUCCESS:
-            console.log('>>> READ_LIST_USERS_SUCCESS');
-            return {
-                ...state,
-                users: action.payload,
-                isLoadingRead: false,
-            };
-
-        case actionTypes.READ_LIST_USERS_FAIL:
-            console.log('>>> READ_LIST_USERS_FAIL');
-            return {
-                ...state,
-                isLoadingRead: false,
-            };
-
-        // Read user of profile page
-        case actionTypes.READ_USER_PROFILE_PAGE_START:
-            console.log('>>> READ_USER_PROFILE_PAGE_START');
+        // UPDATE LIKED POSTS
+        case actionTypes.UPDATE_LIKED_POSTS_START:
+            console.log('>>> UPDATE_LIKED_POSTS_START');
             return state;
 
-        case actionTypes.READ_USER_PROFILE_PAGE_SUCCESS:
-            console.log('>>> READ_USER_PROFILE_PAGE_SUCCESS');
+        case actionTypes.UPDATE_LIKED_POSTS_SUCCESS:
+            console.log('>>> UPDATE_LIKED_POSTS_SUCCESS');
             return {
                 ...state,
-                userProfilePage: action.payload,
+                userLoggedIn: { ...state.userLoggedIn, likedPosts: action.payload },
             };
 
-        case actionTypes.READ_USER_PROFILE_PAGE_FAIL:
-            console.log('>>> READ_USER_PROFILE_PAGE_FAIL');
+        case actionTypes.UPDATE_LIKED_POSTS_FAIL:
+            console.log('>>> UPDATE_LIKED_POSTS_FAIL');
+            return state;
+
+        // UPDATE SAVED POSTS
+        case actionTypes.UPDATE_SAVED_POSTS_START:
+            console.log('>>> UPDATE_SAVED_POSTS_START');
+            return state;
+
+        case actionTypes.UPDATE_SAVED_POSTS_SUCCESS:
+            console.log('>>> UPDATE_SAVED_POSTS_SUCCESS');
+            return {
+                ...state,
+                userLoggedIn: { ...state.userLoggedIn, savedPosts: action.payload },
+            };
+
+        case actionTypes.UPDATE_SAVED_POSTS_FAIL:
+            console.log('>>> UPDATE_SAVED_POSTS_FAIL');
             return state;
 
         default:

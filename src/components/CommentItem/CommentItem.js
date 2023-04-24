@@ -1,52 +1,53 @@
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
+import CommentUI from '../CommentUI';
 import styles from './CommentItem.module.scss';
-import CommonUtils from '~/utils/CommonUtils';
-import * as userServices from '~/services/userServices';
 
 const cx = classNames.bind(styles);
 
-const CommentItem = ({ commentData }) => {
-    const [user, setUser] = useState({});
-    const [avatar, setAvatar] = useState('');
+const CommentItem = ({ commentData, replyList }) => {
+    const children = useRef();
+
+    const [showReplies, setShowReplies] = useState(false);
 
     useEffect(() => {
-        (async () => {
-            const userId = commentData.commentBy;
-            const res = await userServices.getUserById(userId);
-            if (res && res.errCode === 0) setUser(res.data);
-        })();
-    }, [commentData.commentBy]);
+        if (children && children.current) children.current.scrollIntoView();
+    }, [showReplies]);
 
-    useEffect(() => {
-        if (user.avatar) {
-            const avatar = CommonUtils.renderImage(user.avatar);
-            setAvatar(avatar);
-        }
-    }, [user.avatar]);
+    // HANDLE SHOW REPLIES
+    const handleToggleReplies = () => {
+        setShowReplies((prevState) => !prevState);
+    };
 
     return (
         <div className={cx('wrapper')}>
-            <Link to={`/profile/${user.id}`} className={cx('avatar-link')}>
-                <img src={avatar} alt={user.firstName} className={cx('avatar')} />
-            </Link>
-            <div className={cx('content')}>
-                <div className={cx('info')}>
-                    <Link to={`/profile/${user.id}`} className={cx('name')}>
-                        {`${user.firstName} ${user.lastName}`}
-                    </Link>
-                    <div className={cx('comment')}>{commentData.content}</div>
-                </div>
-                <div className={cx('actions')}>
-                    <div className={cx('action')}>Thich</div>
-                    <div className={cx('action')}>Phản hồi</div>
-                    <div className={cx('created-at')}>
-                        {`${CommonUtils.timeSince(new Date(commentData.createdAt))} trước`}
-                    </div>
-                </div>
+            <div className={cx('parent')}>
+                <CommentUI commentData={commentData} />
             </div>
+
+            {showReplies && (
+                <div className={cx('children')}>
+                    <div ref={children}></div>
+                    {replyList.map((reply) => (
+                        <CommentUI key={reply.id} commentData={reply} isReply />
+                    ))}
+                </div>
+            )}
+
+            {replyList && replyList.length > 0 && (
+                <div className={cx('see-replies')} onClick={handleToggleReplies}>
+                    {!showReplies ? <FormattedMessage id="post.see" /> : <FormattedMessage id="post.hide" />}{' '}
+                    {replyList.length} <FormattedMessage id="post.replies" />
+                    {!showReplies ? (
+                        <DownOutlined className={cx('see-replies-icon')} />
+                    ) : (
+                        <UpOutlined className={cx('see-replies-icon')} />
+                    )}
+                </div>
+            )}
         </div>
     );
 };

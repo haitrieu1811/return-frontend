@@ -1,9 +1,10 @@
 .wrapper {
     width: 100%;
-    background-color: var(--white-color);
-    border-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: var(--wrapper-color);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow-2);
     animation: fadeInY 0.2s ease;
+    overflow: hidden;
 }
 
 @keyframes fadeInY {

@@ -2,10 +2,13 @@
     width: var(--sidebar-width);
     position: sticky;
     top: var(--header-height);
+    padding-top: var(--space-to-header);
+    background-color: var(--white-color);
+    border-radius: 6px;
 }
 
 .list {
-    margin-top: 24px;
+    position: relative;
 }
 
 .item {
@@ -14,12 +17,12 @@
     padding: 12px;
     display: flex;
     align-items: center;
-    border-radius: 8px;
-    color: var(--text-color);
-    transition: all 0.1s ease-in-out;
+    border-radius: 6px;
+    color: var(--black-color);
+    font-weight: 500;
 
     + .item {
-        margin-top: 4px;
+        margin-top: 6px;
     }
 
     svg {
@@ -27,12 +30,50 @@
         margin-right: 6px;
     }
 
+    .icon-outline,
+    .icon-fill {
+        font-size: 2rem;
+    }
+
+    .icon-fill {
+        display: none;
+    }
+
     &.active {
         background-color: var(--grey-blur-color);
         color: var(--primary-color);
+
+        .icon-fill {
+            display: block;
+        }
+
+        .icon-outline {
+            display: none;
+        }
     }
 
     &:hover {
         background-color: var(--grey-blur-color);
     }
+}
+
+.navigates {
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+}
+
+@media (max-width: 320px) {
 }

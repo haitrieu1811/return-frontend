@@ -1,0 +1,16 @@
+.wrapper {
+    position: relative;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.image {
+    --size: 120px;
+    width: var(--size);
+}
+
+.text {
+    font-size: 1.5rem;
+    color: var(--grey-color);
+    margin-top: 12px;
+}

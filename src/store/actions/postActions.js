@@ -1,22 +1,20 @@
 import { toast } from 'react-toastify';
 
-import actionTypes from './actionTypes';
 import * as postServices from '~/services/postServices';
+import actionTypes from './actionTypes';
 
-// Create
+// CREATE
 export const createPostStart = (data) => {
-    return async (dispatch, setState) => {
+    return async (dispatch) => {
         try {
             const res = await postServices.createPost(data);
 
-            console.log(res);
-
             if (res && res.errCode === 0) {
-                toast.success(res.message);
                 dispatch(createPostSuccess());
+                toast.success(res.message);
             } else {
-                toast.error(res.message);
                 dispatch(createPostFail());
+                toast.error(res.message);
             }
         } catch (e) {
             dispatch(createPostFail());
@@ -33,19 +31,16 @@ export const createPostFail = () => ({
     type: actionTypes.CREATE_POST_FAIL,
 });
 
-// Read
-export const readPostStart = (limit = 10) => {
+// READ LIST POST
+export const readListPostStart = (userId, page) => {
     return async (dispatch) => {
         try {
-            dispatch({ type: actionTypes.READ_POST_START });
+            dispatch({ type: actionTypes.READ_LIST_POST_START });
 
-            const res = await postServices.getListPosts(limit);
+            const res = await postServices.getListPosts(userId, page);
 
-            if (res && res.errCode === 0) {
-                dispatch(readPostSuccess(res.data));
-            } else {
-                dispatch(readPostFail());
-            }
+            if (res && res.errCode === 0) dispatch(readPostSuccess(res.data));
+            else dispatch(readPostFail());
         } catch (e) {
             dispatch(readPostFail());
             console.log(e);
@@ -54,52 +49,52 @@ export const readPostStart = (limit = 10) => {
 };
 
 export const readPostSuccess = (payload) => ({
-    type: actionTypes.READ_POST_SUCCESS,
+    type: actionTypes.READ_LIST_POST_SUCCESS,
     payload,
 });
 
 export const readPostFail = () => ({
-    type: actionTypes.READ_POST_FAIL,
+    type: actionTypes.READ_LIST_POST_FAIL,
 });
 
-// Read posts of user
-export const readPostsOfUserStart = (userId) => {
+// UPDATE
+export const updatePostStart = (data, postId) => {
     return async (dispatch) => {
         try {
-            dispatch({ type: actionTypes.READ_POST_OF_USER_START });
-
-            const res = await postServices.getPostsByUserId(userId);
-
+            const res = await postServices.update(data, postId);
             if (res && res.errCode === 0) {
-                dispatch(readPostsOfUserSuccess(res.data));
+                await dispatch(updatePostSuccess());
+                await dispatch(readListPostStart(10));
+                toast.success(res.message);
             } else {
-                dispatch(readPostsOfUserFail());
+                dispatch(updatePostFail());
+                toast.error(res.message);
             }
         } catch (e) {
-            dispatch(readPostsOfUserFail());
+            dispatch(updatePostFail());
             console.log(e);
         }
     };
 };
 
-export const readPostsOfUserSuccess = (payload) => ({
-    type: actionTypes.READ_POST_OF_USER_SUCCESS,
-    payload,
+export const updatePostSuccess = () => ({
+    type: actionTypes.UPDATE_POST_SUCCESS,
 });
 
-export const readPostsOfUserFail = () => ({
-    type: actionTypes.READ_POST_OF_USER_FAIL,
+export const updatePostFail = () => ({
+    type: actionTypes.UPDATE_POST_FAIL,
 });
 
-// Delete
-export const deletePostStart = (postId, userId) => {
+// DELETE
+export const deletePostStart = (postId) => {
     return async (dispatch) => {
         try {
             const res = await postServices.handleDelete(postId);
             if (res && res.errCode === 0) {
                 await dispatch(deletePostSuccess());
-                await dispatch(readPostStart());
-                await dispatch(readPostsOfUserStart(userId));
+
+                await dispatch(handleDeleteCommentHistoriesStart(postId));
+
                 toast.success(res.message);
             } else {
                 toast.success(res.message);
@@ -119,3 +114,53 @@ export const deletePostSuccess = () => ({
 export const deletePostFail = () => ({
     type: actionTypes.DELETE_POST_FAIL,
 });
+
+// DELETE ALL COMMENT HISTORIES
+export const handleDeleteCommentHistoriesStart = (postId) => {
+    return async () => {
+        try {
+            await postServices.handleDeleteCommentHistories(postId);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+// DELETE COMMENT BY ID
+export const handleDeleteCommentById = (commentId) => {
+    return async () => {
+        try {
+            const res = await postServices.handleDeleteCommentById(commentId);
+            if (res && res.errCode === 0) toast.success(res.message);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+// DELETE COMMENT REPLY BY ID
+export const handleDeleteCommentReplyById = (commentReplyId) => {
+    return async () => {
+        try {
+            const res = await postServices.deleteCommentReply(commentReplyId);
+            if (res && res.errCode === 0) toast.success(res.message);
+            else toast.error(res.message);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+// DELETE PHOTO
+export const deletePhotoStart = (photoId) => {
+    return async () => {
+        try {
+            const res = await postServices.handleDeletePhotoById(photoId);
+
+            if (res && res.errCode === 0) toast.success(res.message);
+            else toast.error(res.message);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};

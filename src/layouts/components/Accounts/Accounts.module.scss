@@ -1,0 +1,70 @@
+.wrapper {
+    width: var(--sidebar-width);
+    position: sticky;
+    top: var(--header-height);
+}
+
+.heading {
+    margin-top: var(--space-to-header);
+    color: var(--grey-color);
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.list {
+    position: relative;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+
+    &:hover {
+        background-color: var(--grey-blur-color);
+    }
+}
+
+.avatar {
+    --size: 35px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.nickname {
+    color: var(--black-color);
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.name {
+    color: var(--grey-color);
+    font-size: 1.2rem;
+}
+
+.tick {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-left: 6px;
+}
+
+.action {
+    margin-top: 12px;
+    text-align: right;
+}
+
+.see-more {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 500;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

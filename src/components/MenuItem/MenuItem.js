@@ -1,11 +1,12 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
+import { Space } from 'antd';
 
 import styles from './MenuItem.module.scss';
 
 const cx = classNames.bind(styles);
 
-const MenuItem = ({ to, onClick, children, ...passProps }) => {
+const MenuItem = ({ to, icon, onClick, children, ...passProps }) => {
     let Comp = 'button';
 
     const props = { ...passProps };
@@ -17,7 +18,9 @@ const MenuItem = ({ to, onClick, children, ...passProps }) => {
 
     return (
         <Comp className={cx('wrapper')} onClick={onClick} {...props}>
-            {children}
+            <Space>
+                {icon} {children}
+            </Space>
         </Comp>
     );
 };

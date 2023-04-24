@@ -1,3 +1,3 @@
-export * from './locationActions';
+export * from './appActions';
 export * from './userActions';
 export * from './postActions';

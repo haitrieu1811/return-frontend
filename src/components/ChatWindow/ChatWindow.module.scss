@@ -1,0 +1,148 @@
+.wrapper {
+    background-color: var(--white-color);
+    box-shadow: var(--box-shadow-3);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.receiver {
+    display: flex;
+    align-items: center;
+}
+
+.receiver-avatar {
+    --size: 45px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.receiver-info {
+    margin-left: 12px;
+    line-height: 1.3;
+}
+
+.receiver-firstName {
+    font-size: 1.8rem;
+    color: var(--black-color);
+}
+
+.receiver-lastName {
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.options {
+    --size: 35px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:active {
+        background-color: var(--grey-blur-color);
+        border: 1px solid var(--border-color);
+    }
+}
+
+.options-icon {
+    color: var(--grey-color);
+}
+
+.message-container {
+    flex: 1;
+    min-height: 65vh;
+    max-height: 65vh;
+    overflow-y: overlay;
+    padding: 16px;
+    padding-top: 0;
+}
+
+.message-received,
+.message-sent {
+    margin-top: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+
+    .message-content {
+        padding: 8px 12px;
+        font-size: 1.5rem;
+        border-radius: 6px;
+        display: inline-block;
+    }
+}
+
+.message-received {
+    .message-content {
+        background-color: #e4e6eb;
+        color: #222222;
+    }
+
+    .message-avatar-me {
+        display: none;
+    }
+}
+
+.message-sent {
+    display: flex;
+    justify-content: flex-end;
+
+    .message-content {
+        background-color: var(--black-color);
+        background-color: #1877f2;
+        color: #ffffff;
+    }
+
+    .message-avatar-user {
+        display: none;
+    }
+}
+
+.message-avatar {
+    --size: 35px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.message-avatar-user {
+    margin-right: 8px;
+}
+
+.message-avatar-me {
+    margin-left: 8px;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+}
+
+@media (max-width: 320px) {
+}

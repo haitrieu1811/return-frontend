@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Background from '~/assets/images/bg.jpg';
 import Logo from '~/components/Logo';
 import * as actions from '~/store/actions';
 import * as selectors from '~/store/selectors';
@@ -13,12 +13,16 @@ import styles from './Login.module.scss';
 const cx = classNames.bind(styles);
 
 const Login = () => {
+    const intl = useIntl();
+    const usernameTxt = intl.formatMessage({ id: 'auth.username' });
+    const passwordTxt = intl.formatMessage({ id: 'auth.password' });
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const isLoggedIn = useSelector(selectors.isLoggedIn);
 
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
@@ -26,7 +30,7 @@ const Login = () => {
     }, [navigate, isLoggedIn]);
 
     const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
+        setUsername(e.target.value);
     };
 
     const handleChangePassword = (e) => {
@@ -35,47 +39,46 @@ const Login = () => {
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
-        dispatch(actions.userLoginStart(email, password));
+        dispatch(actions.userLoginStart(username, password));
     };
 
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('main')} style={{ backgroundImage: `url(${Background})` }}>
+            <div className={cx('main')}>
                 <form className={cx('form')} method="POST" onSubmit={(e) => handleSubmitLogin(e)}>
                     <Logo />
 
+                    {/* Username */}
                     <div className={cx('form-group')}>
-                        <label htmlFor="email">Email</label>
                         <input
                             type="text"
-                            id="email"
-                            placeholder="Email"
-                            value={email}
+                            id="username"
+                            placeholder={usernameTxt}
+                            value={username}
                             onChange={(e) => handleChangeEmail(e)}
                         />
                     </div>
 
+                    {/* Password */}
                     <div className={cx('form-group')}>
-                        <label htmlFor="password">Mật khẩu</label>
                         <input
                             type="password"
                             id="password"
-                            placeholder="Mật khẩu"
+                            placeholder={passwordTxt}
                             value={password}
                             onChange={(e) => handleChangePassword(e)}
                         />
                     </div>
 
                     <button type="submit" className={cx('submit')}>
-                        Đăng nhập
+                        <FormattedMessage id="auth.login" />
                     </button>
 
-                    <div className={cx('forget-pass')}>
-                        <Link to={PATH.home}>Quên mật khẩu?</Link>
-                    </div>
-
                     <div className={cx('register')}>
-                        Bạn chưa có tài khoản? <Link to={PATH.register}>Đăng kí</Link>
+                        <FormattedMessage id="auth.noAccount" />{' '}
+                        <Link to={PATH.register}>
+                            <FormattedMessage id="auth.register" />
+                        </Link>
                     </div>
                 </form>
             </div>

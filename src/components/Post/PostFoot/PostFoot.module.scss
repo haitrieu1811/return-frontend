@@ -1,0 +1,55 @@
+.foot {
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 6px;
+
+    + .item {
+        margin-left: 12px;
+    }
+
+    &:hover {
+        background-color: var(--grey-blur-color);
+    }
+}
+
+.icon {
+    color: var(--grey-color);
+    font-size: 2.2rem;
+}
+
+.icon-fill {
+    color: var(--red-color);
+}
+
+.count {
+    color: var(--grey-color);
+    margin-left: 6px;
+    user-select: none;
+}
+
+.closed-comment {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.closed-comment-text {
+    color: var(--grey-color);
+    margin: 12px 0 6px;
+    font-size: 1.5rem;
+    font-weight: 500;
+}

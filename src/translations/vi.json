@@ -1,0 +1,105 @@
+{
+    "header": {
+        "search": "Tìm kiếm",
+        "personalPage": "Trang cá nhân",
+        "savedPosts": "Bài viết đã lưu",
+        "logout": "Đăng xuất"
+    },
+
+    "sidebar": {
+        "home": "Trang chủ",
+        "createPost": "Đăng bài",
+        "setting": "Cài đặt",
+        "chat": "Trò chuyện"
+    },
+
+    "accounts": {
+        "suggest": "Tài khoản đề xuất",
+        "seeMore": "Xem thêm"
+    },
+
+    "time": {
+        "second": "giây",
+        "minute": "phút",
+        "hour": "giờ",
+        "day": "ngày",
+        "week": "tuần",
+        "month": "tháng",
+        "year": "năm",
+        "ago": "trước"
+    },
+
+    "post": {
+        "savePost": "Lưu bài viết",
+        "unSavePost": "Bỏ lưu bài viết",
+        "editPost": "Chỉnh sửa bài viết",
+        "deletePost": "Xóa bài viết",
+        "reportPost": "Báo cáo bài viết",
+        "seeMore": "Xem thêm",
+        "seeLess": "Rút gọn",
+        "comment": "Bình luận",
+        "typeComment": "Nhập bình luận",
+        "see": "Xem",
+        "hide": "Ẩn",
+        "replies": "phản hồi",
+        "reply": "Trả lời",
+        "updatePost": "Cập nhật bài viết",
+        "deleteConfirm": "Bạn có chắc muốn xóa bài viết này?",
+        "deleteConfirmDesc": "Bài viết sẽ không được khôi phục khi xóa",
+
+        "updateComment": "Sửa bình luận",
+        "deleteComment": "Xóa bình luận",
+        "deleteCommentConfirm": "Bạn muốn xóa bình luận?",
+        "deleteCommentConfirmDesc": "Bình luận sẽ bị xóa vĩnh viễn",
+        "disabledComments": "Bình luận đã tắt",
+
+        "noComment": "Chưa có bình luận",
+        "noPostSaved": "Chưa lưu bài viết nào",
+        "noPostCreate": "Chưa tạo bài viết nào"
+    },
+
+    "profile": {
+        "post": "Bài đăng",
+        "likes": "Lượt thích",
+        "updateInfo": "Cập nhật thông tin"
+    },
+
+    "form": {
+        "username": "Tài khoản",
+        "firstName": "Tên",
+        "lastName": "Họ",
+        "avatar": "Ảnh đại diện",
+        "upload": "Tải lên",
+
+        "mode": "Chế độ",
+        "global": "Công khai",
+        "private": "Riêng tư",
+        "allowUsers": "Cho phép người dùng",
+        "comment": "Bình luận",
+        "savePost": "Lưu bài viết",
+        "content": "Nội dung",
+
+        "cancel": "Hủy",
+        "update": "Cập nhật",
+        "yes": "Có",
+        "no": "Không"
+    },
+
+    "setting": {
+        "general": "Chung",
+        "darkMode": "Giao diện tối",
+        "english": "Tiếng Anh"
+    },
+
+    "auth": {
+        "login": "Đăng nhập",
+        "register": "Đăng kí",
+        "username": "Tên đăng nhập",
+        "password": "Mật khẩu",
+        "firstName": "Họ",
+        "lastName": "Tên",
+        "passwordConfirm": "Nhập lại mật khẩu",
+        "noAccount": "Bạn chưa có tài khoản?",
+        "haveAccount": "Bạn đã có tài khoản?"
+    }
+}

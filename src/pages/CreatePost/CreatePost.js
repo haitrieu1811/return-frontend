@@ -1,114 +1,33 @@
-import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FileImageOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import _ from 'lodash';
+import { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '~/components/Button';
-import Input from '~/components/Input';
+import CheckboxGroup from '~/components/CheckboxGroup';
+import Result from '~/components/Result';
 import Select from '~/components/Select';
 import TextArea from '~/components/TextArea';
-import * as locationServices from '~/services/locationService';
-import * as selectors from '~/store/selectors';
 import * as actions from '~/store/actions';
-import styles from './CreatePost.module.scss';
+import * as selectors from '~/store/selectors';
 import CommonUtils from '~/utils/CommonUtils';
+import styles from './CreatePost.module.scss';
 
 const cx = classNames.bind(styles);
 
 const CreatePost = () => {
     const dispatch = useDispatch();
 
-    const userId = useSelector(selectors.userLoggedIn).id;
-    const isSuccess = useSelector(selectors.isCreatePostSuccess);
+    const userLoggedIn = useSelector(selectors.userLoggedIn);
 
-    const [address, setAddress] = useState('');
-    const [content, setContent] = useState('');
-    const [previewImages, setPreviewImages] = useState([]);
     const [photos, setPhotos] = useState([]);
+    const [previewImages, setPreviewImages] = useState([]);
+    const [mode, setMode] = useState('global');
+    const [allows, setAllows] = useState(['comment', 'save']);
+    const [content, setContent] = useState('');
 
-    const [provinceId, setProvinceId] = useState(undefined);
-    const [districtId, setDistrictId] = useState(undefined);
-    const [wardId, setWardId] = useState(undefined);
-
-    const [provinces, setProvinces] = useState([]);
-    const [districts, setDistricts] = useState([]);
-    const [wards, setWards] = useState([]);
-
-    const [provincesOptions, setProvincesOptions] = useState([]);
-    const [districtsOptions, setDistrictsOptions] = useState([]);
-    const [wardsOptions, setWardsOptions] = useState([]);
-
-    // Get all provinces
-    useEffect(() => {
-        (async () => {
-            const res = await locationServices.getAllProvinces();
-            if (res && res.errCode === 0) setProvinces(res.data);
-        })();
-    }, []);
-
-    // Set province options
-    useEffect(() => {
-        setProvincesOptions(
-            provinces.map((province) => ({
-                value: province.id,
-                label: province.name,
-            })),
-        );
-    }, [provinces]);
-
-    // Get all districts
-    useEffect(() => {
-        (async () => {
-            const res = await locationServices.getListDistricts(provinceId);
-            if (res && res.errCode === 0) setDistricts(res.data);
-        })();
-    }, [provinceId]);
-
-    // Set district options
-    useEffect(() => {
-        setDistrictsOptions(
-            districts.map((district) => ({
-                value: district.id,
-                label: `${district.prefix} ${district.name}`,
-            })),
-        );
-    }, [districts]);
-
-    // Get all wards
-    useEffect(() => {
-        (async () => {
-            const res = await locationServices.getListWards(provinceId, districtId);
-            if (res && res.errCode === 0) setWards(res.data);
-        })();
-    }, [provinceId, districtId]);
-
-    // Set ward options
-    useEffect(() => {
-        setWardsOptions(
-            wards.map((ward) => ({
-                value: ward.id,
-                label: `${ward.prefix} ${ward.name}`,
-            })),
-        );
-    }, [wards]);
-
-    // Handle change province
-    const handleChangeProvince = (value) => {
-        setProvinceId(value);
-    };
-
-    // Handle change district
-    const handleChangeDistrict = (value) => {
-        setDistrictId(value);
-    };
-
-    // Handle change ward
-    const handleChangeWard = (value) => {
-        setWardId(value);
-    };
-
-    // Handle change photos
+    // HANDLE CHANGE PHOTO
     const handleChangeThumbnail = async (e) => {
         const files = e.target.files;
         const filesLength = e.target.files.length;
@@ -128,113 +47,123 @@ const CreatePost = () => {
         setPhotos(imagesBase64);
     };
 
-    // Handle create post
+    // HANDLE CREATE
     const handleCreatePost = () => {
+        const userId = userLoggedIn.id;
         const data = {
-            address,
-            content,
-            provinceId,
-            districtId,
-            wardId,
             userId,
-            status: 'pending',
             photos,
+            status: 'resolve',
+            mode,
+            allows,
+            content,
         };
 
         dispatch(actions.createPostStart(data));
     };
 
+    // HANDLE CANCEL
+    const handleCancel = () => {
+        setPreviewImages([]);
+        setContent('');
+    };
+
+    // HANDLE CHANGE MODE
+    const handleChangeMode = (mode) => {
+        setMode(mode);
+    };
+
+    // HANDLE CHANGE ALLOW
+    const handleChangeAllow = (checkedValues) => {
+        setAllows(checkedValues);
+    };
+
     return (
         <div className={cx('wrapper')}>
-            {/* Photos */}
-            <div className={cx('photos')}>
-                <div className={cx('photo')}>
-                    {previewImages &&
-                        previewImages.length > 0 &&
-                        previewImages.map((image, index) => (
-                            <div key={index} className={cx('preview')}>
-                                <img src={image} alt="" />
+            {!_.isEmpty(userLoggedIn) ? (
+                <Fragment>
+                    {/* Photos */}
+                    <div className={cx('photos')}>
+                        {previewImages.map((image, index) => (
+                            <div key={index} className={cx('photo')}>
+                                <img src={image} alt="" className={cx('image')} />
                             </div>
                         ))}
 
-                    <label htmlFor="thumbnail">
-                        <div className={cx('upload')}>
-                            <FontAwesomeIcon icon={faCloudArrowUp} className={cx('upload-icon')} />
-                            <span className={cx('upload-text')}>Tải hình ảnh</span>
+                        <label htmlFor="thumbnail" className={cx('photo', 'add')}>
+                            <FileImageOutlined className={cx('add-icon')} />
+                        </label>
+
+                        <input
+                            type="file"
+                            name="thumbnail"
+                            id="thumbnail"
+                            onChange={(e) => handleChangeThumbnail(e)}
+                            multiple
+                            hidden
+                        />
+                    </div>
+
+                    {/* Form */}
+                    <div className={cx('form')}>
+                        {/* Mode */}
+                        <div className={cx('group')} style={{ '--columns': 1 }}>
+                            <div className={cx('item')}>
+                                <label className={cx('label')}>Chế độ</label>
+                                <Select
+                                    defaultValue={{ value: 'global', label: 'Công khai' }}
+                                    options={[
+                                        { value: 'global', label: 'Công khai' },
+                                        { value: 'private', label: 'Riêng tư' },
+                                    ]}
+                                    onChange={handleChangeMode}
+                                />
+                            </div>
                         </div>
-                    </label>
 
-                    <input
-                        type="file"
-                        name="thumbnail"
-                        id="thumbnail"
-                        onChange={(e) => handleChangeThumbnail(e)}
-                        multiple
-                        hidden
-                    />
-                </div>
-            </div>
+                        {/* Allows */}
+                        <div className={cx('group')} style={{ '--columns': 1 }}>
+                            <div className={cx('item')}>
+                                <label className={cx('label')}>Cho phép người dùng</label>
+                                <CheckboxGroup
+                                    defaultValue={['comment', 'save']}
+                                    options={[
+                                        { value: 'comment', label: 'Bình luận', checked: true },
+                                        { value: 'save', label: 'Lưu bài viết' },
+                                    ]}
+                                    onChange={handleChangeAllow}
+                                />
+                            </div>
+                        </div>
 
-            {/* Form */}
-            <div className={cx('form')}>
-                {/* Provine, district, ward */}
-                <div className={cx('group')} style={{ '--columns': 3 }}>
-                    {/* Province */}
-                    <div className={cx('item')}>
-                        <label className={cx('label')}>Tỉnh/thành phố</label>
-                        <Select name="provinceId" options={provincesOptions} onChange={handleChangeProvince} />
-                    </div>
-                    {/* District */}
-                    <div className={cx('item')}>
-                        <label className={cx('label')}>Quận/huyện</label>
-                        <Select name="districtId" options={districtsOptions} onChange={handleChangeDistrict} />
-                    </div>
-                    {/* Ward */}
-                    <div className={cx('item')}>
-                        <label className={cx('label')}>Phường/xã</label>
-                        <Select name="wardid" options={wardsOptions} onChange={handleChangeWard} />
-                    </div>
-                </div>
+                        {/* Content */}
+                        <div className={cx('group')} style={{ '--columns': 1 }}>
+                            <div className={cx('item')}>
+                                <label className={cx('label')} htmlFor="content">
+                                    Nội dung
+                                </label>
+                                <TextArea
+                                    rows="3"
+                                    name="content"
+                                    id="content"
+                                    value={content}
+                                    onChange={(e) => setContent(e.target.value)}
+                                ></TextArea>
+                            </div>
+                        </div>
 
-                {/* Address */}
-                <div className={cx('group')} style={{ '--columns': 1 }}>
-                    <div className={cx('item')}>
-                        <label className={cx('label')} htmlFor="address">
-                            Địa chỉ cụ thể
-                        </label>
-                        <Input
-                            name="address"
-                            id="address"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                        />
+                        {/* Buttons */}
+                        <div className={cx('buttons')}>
+                            <Button onClick={handleCancel}>Hủy</Button>
+                            <Button type="primary" onClick={handleCreatePost}>
+                                Đăng
+                            </Button>
+                        </div>
                     </div>
-                </div>
-
-                {/* Content */}
-                <div className={cx('group')} style={{ '--columns': 1 }}>
-                    <div className={cx('item')}>
-                        <label className={cx('label')} htmlFor="content">
-                            Nội dung
-                        </label>
-                        <TextArea
-                            rows="5"
-                            name="content"
-                            id="content"
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                {/* Buttons */}
-                <div className={cx('buttons')}>
-                    <Button>Hủy</Button>
-                    <Button type="primary" onClick={handleCreatePost}>
-                        Đăng
-                    </Button>
-                </div>
-            </div>
+                </Fragment>
+            ) : (
+                <Result />
+            )}
         </div>
     );
 };

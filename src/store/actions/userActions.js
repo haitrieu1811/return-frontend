@@ -3,14 +3,13 @@ import { toast } from 'react-toastify';
 import actionTypes from './actionTypes';
 import * as userServices from '~/services/userServices';
 
-// Register
-export const userRegisterStart = (email, password, passwordConfirm) => {
-    return async (dispatch, setState) => {
+// REGISTER
+export const userRegisterStart = (data) => {
+    return async (dispatch) => {
         try {
             dispatch({ type: actionTypes.USER_REGISTER_START });
 
-            const data = { email, password, passwordConfirm };
-            const res = await userServices.handleRegister(data);
+            const res = await userServices.register(data);
 
             if (res && res.errCode === 0) {
                 toast.success('Đăng kí tài khoản thành công');
@@ -35,14 +34,13 @@ export const userRegisterFail = () => ({
     type: actionTypes.USER_REGISTER_FAIL,
 });
 
-// Login
-export const userLoginStart = (email, password) => {
-    return async (dispatch, setState) => {
+// LOGIN
+export const userLoginStart = (username, password) => {
+    return async (dispatch) => {
         try {
             dispatch({ type: actionTypes.USER_LOGIN_START });
 
-            const data = { email, password };
-            const res = await userServices.handleLogin(data);
+            const res = await userServices.login(username, password);
 
             if (res && res.errCode === 0) {
                 toast.success(res.message);
@@ -68,21 +66,20 @@ export const userLoginFail = () => ({
     type: actionTypes.USER_LOGIN_FAIL,
 });
 
-// Logout
+// LOGOUT
 export const userLogoutSuccess = () => ({
     type: actionTypes.USER_LOGOUT_SUCCESS,
 });
 
-// Update
+// UPDATE
 export const userUpdateStart = (data, userId) => {
-    return async (dispatch, setState) => {
+    return async (dispatch) => {
         try {
-            const res = await userServices.handleUpdate(data);
+            const res = await userServices.update(data);
 
             if (res && res.errCode === 0) {
                 toast.success(res.message);
                 dispatch(userUpdateSuccess(res.data));
-                dispatch(readUserProfilePageStart(userId));
             } else {
                 toast.error(res.message);
                 dispatch(userUpdateFail());
@@ -103,84 +100,42 @@ export const userUpdateFail = () => ({
     type: actionTypes.USER_UPDATE_FAIL,
 });
 
-// Delete
-export const deleteUserStart = (userId) => {
-    return async (dispatch, setState) => {
+// UPDATE LIKED POST
+export const updateLikedPostsStart = (newLikedPosts) => {
+    return (dispatch) => {
         try {
-            const res = await userServices.handleDelete(userId);
-
-            if (res && res.errCode === 0) {
-                await dispatch(deleteUserSuccess());
-                await dispatch(readUsersStart());
-                toast.success(res.message);
-            } else {
-                toast.error(res.message);
-                dispatch(deleteUserFail());
-            }
-        } catch (e) {
-            toast.error(e);
-            dispatch(deleteUserFail());
-            console.log(e);
-        }
-    };
-};
-
-export const deleteUserSuccess = () => ({
-    type: actionTypes.DELETE_USER_SUCCESS,
-});
-
-export const deleteUserFail = () => ({
-    type: actionTypes.DELETE_USER_FAIL,
-});
-
-// Read list users
-export const readUsersStart = () => {
-    return async (dispatch, setState) => {
-        try {
-            dispatch({ type: actionTypes.READ_LIST_USERS_START });
-
-            const res = await userServices.getAllUsers();
-
-            if (res && res.errCode === 0) {
-                dispatch(readUserSuccess(res.data));
-            }
-        } catch (e) {
-            dispatch(readUsersFail());
-            console.log(e);
-        }
-    };
-};
-
-export const readUserSuccess = (payload) => ({
-    type: actionTypes.READ_LIST_USERS_SUCCESS,
-    payload,
-});
-
-export const readUsersFail = () => ({
-    type: actionTypes.READ_LIST_USERS_FAIL,
-});
-
-// Read user profile page
-export const readUserProfilePageStart = (userId) => {
-    return async (dispatch) => {
-        try {
-            const res = await userServices.getUserById(userId);
-            if (res && res.errCode === 0) {
-                dispatch(readUserProfilePageSuccess(res.data));
-            } else {
-                dispatch(readUserProfilePageFail());
-            }
+            dispatch(updateLikedPostsSuccess(newLikedPosts));
         } catch (e) {
             console.log(e);
         }
     };
 };
 
-export const readUserProfilePageSuccess = (payload) => ({
-    type: actionTypes.READ_USER_PROFILE_PAGE_SUCCESS,
-    payload,
+export const updateLikedPostsSuccess = (payload) => ({
+    type: actionTypes.UPDATE_LIKED_POSTS_SUCCESS,
+    payload: payload,
 });
 
-export const readUserProfilePageFail = () => ({
-    type: actionTypes.READ_USER_PROFILE_PAGE_FAIL,
+export const updateLikedPostsFail = () => ({
+    type: actionTypes.UPDATE_LIKED_POSTS_FAIL,
+});
+
+// UPDATE SAVED POST
+export const updateSavedPostsStart = (newSavedPosts) => {
+    return (dispatch) => {
+        try {
+            dispatch(updateSavedPostsSuccess(newSavedPosts));
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const updateSavedPostsSuccess = (payload) => ({
+    type: actionTypes.UPDATE_SAVED_POSTS_SUCCESS,
+    payload: payload,
+});
+
+export const updateSavedPostsFail = () => ({
+    type: actionTypes.UPDATE_SAVED_POSTS_FAIL,
 });

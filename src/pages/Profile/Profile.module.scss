@@ -1,38 +1,66 @@
 .wrapper {
-    position: relative;
+    width: 100%;
 }
 
 .info {
     display: flex;
     align-items: flex-start;
     background-color: var(--grey-blur-color);
+    box-shadow: var(--box-shadow-1);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 36px;
 }
 
 .avatar {
-    --size: 240px;
+    --size: 220px;
     width: var(--size);
     height: var(--size);
     object-fit: cover;
-    border-radius: inherit;
+    border-radius: 50%;
 }
 
 .info-list {
     flex: 1;
-    margin-left: 24px;
+    margin-left: 36px;
+}
+
+.head {
+    display: flex;
+    align-items: flex-start;
+}
+
+.fullName {
+    margin-right: 16px;
+}
+
+.tick {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-top: 12px;
 }
 
 .firstName {
-    font-size: 5rem;
-    line-height: 1.2;
+    font-size: 3.5rem;
+    line-height: 1.3;
+    color: var(--black-color);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 .lastName {
     font-size: 3rem;
-    font-weight: 300;
-    line-height: 1.2;
+    line-height: 1.3;
+    color: var(--grey-color);
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 .statistics {
@@ -48,12 +76,14 @@
 }
 
 .statistic-label {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    color: var(--grey-color);
 }
 
 .statistic-value {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 600;
+    color: var(--black-color);
 }
 
 .actions {
@@ -64,4 +94,73 @@
 .update {
     padding: 8px;
     cursor: pointer;
+}
+
+.update-icon {
+    font-size: 2rem;
+    color: var(--black-color);
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+    .info {
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+
+    .info-list {
+        margin-left: 24px;
+    }
+
+    .avatar {
+        --size: 110px;
+    }
+
+    .firstName {
+        font-size: 3rem;
+    }
+
+    .lastName {
+        font-size: 1.8rem;
+    }
+
+    .fullName {
+        margin-right: 10px;
+    }
+
+    .tick {
+        font-size: 1.5rem;
+    }
+
+    .statistics {
+        margin: 12px 0;
+    }
+
+    .statistic {
+        + .statistic {
+            margin-left: 24px;
+        }
+    }
+
+    .statistic-label {
+        font-size: 1.2rem;
+    }
+
+    .statistic-value {
+        font-size: 1.5rem;
+    }
+    .update-icon {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 320px) {
 }

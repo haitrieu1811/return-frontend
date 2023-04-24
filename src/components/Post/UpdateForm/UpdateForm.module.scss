@@ -1,0 +1,58 @@
+.wrapper {
+    position: relative;
+}
+
+.form {
+    flex: 1;
+}
+
+.group {
+    --space: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(0px - var(--space));
+
+    + .group {
+        margin-top: 24px;
+    }
+}
+
+.item {
+    width: calc(100% / var(--columns) - var(--space));
+    margin-left: var(--space);
+
+    > * {
+        color: var(--black-color);
+        display: block;
+        width: 100%;
+        background-color: transparent;
+    }
+
+    input {
+        font-size: 1.5rem;
+    }
+}
+
+.label {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+    .photos {
+        --columns: 2;
+        --space: 6px;
+    }
+}
+
+@media (max-width: 320px) {
+}

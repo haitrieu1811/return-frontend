@@ -1,60 +1,48 @@
-import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import GridStyles from '~/components/GridStyles';
-import { emitter } from '~/emitter';
-import * as actions from '~/store/actions';
-import * as selectors from '~/store/selectors';
-import Skeleton from '~/components/Skeleton';
-
-const Post = React.lazy(() => import('~/components/Post'));
+import PostList from '~/components/PostList';
+import Spinner from '~/components/Spinner';
+import * as postServices from '~/services/postServices';
 
 const Home = () => {
-    const dispatch = useDispatch();
-
-    const reduxPosts = useSelector(selectors.listPosts);
-
     const [posts, setPosts] = useState([]);
-    const [postLimit, setPostLimit] = useState(8);
+    const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
 
-    // Get list posts
+    // GET LIST POSTS
     useEffect(() => {
-        dispatch(actions.readPostStart(postLimit));
-    }, [dispatch, postLimit]);
+        (async () => {
+            setIsLoading(true);
+            const res = await postServices.getListPosts(null, 1);
+            if (res && res.errCode === 0) setPosts(res.data);
+            setIsLoading(false);
+        })();
+    }, []);
 
-    useEffect(() => {
-        setPosts(reduxPosts);
-    }, [reduxPosts]);
-
-    // Lazy loading
-    // const observer = useRef();
-    // const lastBookElementRef = useCallback((node) => {
-    //     if (observer.current) observer.current.disconnect();
-
-    //     observer.current = new IntersectionObserver((entries) => {
-    //         if (entries[0].isIntersecting) {
-    //             // setPostLimit((prevState) => prevState + 10);
-    //         }
-    //     });
-
-    //     if (node) observer.current.observe(node);
-    // }, []);
-
-    (() => {
-        emitter.on('RENDER_POSTS_LIST', () => {
-            console.log(123);
-        });
-    })();
+    // FETCH MORE POST
+    const fetchMorePost = async () => {
+        const nextPage = page + 1;
+        const morePost = await postServices.getListPosts(null, nextPage);
+        if (morePost && morePost.errCode === 0) {
+            setPosts((prevState) => [...prevState, ...morePost.data]);
+            setPage(nextPage);
+        } else {
+            setHasMore(false);
+        }
+    };
 
     return (
         <GridStyles>
-            {posts &&
-                posts.length > 0 &&
-                posts.map((post) => (
-                    <Suspense key={post.id} fallback={<Skeleton />}>
-                        <Post postData={post} />
-                    </Suspense>
-                ))}
+            {!isLoading ? (
+                <InfiniteScroll dataLength={posts.length} next={fetchMorePost} hasMore={hasMore} loader={<Spinner />}>
+                    <PostList postList={posts} />
+                </InfiniteScroll>
+            ) : (
+                <Spinner />
+            )}
         </GridStyles>
     );
 };

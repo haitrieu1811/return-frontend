@@ -10,14 +10,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--wrapper-color);
 }
 
 .form {
-    width: 420px;
+    width: 400px;
     max-width: 90%;
-    padding: 60px 50px;
+    padding: 30px;
     border-radius: 12px;
     background-color: var(--white-color);
+    border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,33 +27,19 @@
 
 .form-group {
     position: relative;
-    margin-top: 36px;
+    margin-top: 24px;
     width: 100%;
 
-    label {
-        display: inline-block;
-        font-weight: 600;
-        cursor: pointer;
-        position: absolute;
-        top: 0;
-        left: 10px;
-        background-color: var(--white-color);
-        padding: 1px 5px;
-        font-size: 1.5rem;
-        transform: translateY(-50%);
-        color: var(--grey-color);
-    }
-
     input {
-        padding: 15px;
+        padding: 12px 2px;
         display: block;
         width: 100%;
-        font-size: 14px;
-        border: 2px solid var(--border-color);
-        border-radius: 4px;
+        font-size: 1.7rem;
+        border: none;
+        border-bottom: 1px solid #e8ebed;
         background-color: transparent;
         outline: none;
-        color: var(--text-color);
+        color: var(--black-color);
     }
 
     &:focus-within label {
@@ -68,17 +56,17 @@
     width: 100%;
     border: none;
     outline: none;
-    color: var(--white-color);
+    color: #ffffff;
     background-color: var(--primary-color);
-    padding: 14px 0;
-    font-size: 1.6rem;
+    padding: 12px 0;
+    font-size: 1.7rem;
     font-weight: 600;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 32px;
 }
 
 .login {
-    margin-top: 12px;
+    margin-top: 24px;
     color: var(--grey-color);
     font-size: 1.5rem;
     text-align: center;
@@ -86,7 +74,7 @@
     a {
         font-size: 1.5rem;
         font-weight: 600;
-        color: var(--primary-color);
+        color: var(--grey-color);
         margin-left: 2px;
 
         &:hover {

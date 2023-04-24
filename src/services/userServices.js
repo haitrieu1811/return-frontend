@@ -1,6 +1,7 @@
 import * as httpRequest from '~/utils/httpRequest';
 
-export const handleRegister = async (data) => {
+// REGISTER
+export const register = async (data) => {
     try {
         const res = await httpRequest.post('user/register', data);
         return res;
@@ -9,16 +10,18 @@ export const handleRegister = async (data) => {
     }
 };
 
-export const handleLogin = async (data) => {
+// LOGIN
+export const login = async (username, password) => {
     try {
-        const res = await httpRequest.post('user/login', data);
+        const res = await httpRequest.get('user/login', { params: { username, password } });
         return res;
     } catch (e) {
         console.log(e);
     }
 };
 
-export const handleUpdate = async (data) => {
+// UPDATE
+export const update = async (data) => {
     try {
         const res = await httpRequest.put('user/update', data);
         return res;
@@ -27,37 +30,30 @@ export const handleUpdate = async (data) => {
     }
 };
 
-export const getUserById = async (userId) => {
+// GET USER
+export const getUser = async (userId) => {
     try {
-        const res = await httpRequest.get('user/get-user', {
-            params: {
-                userId,
-            },
-        });
-
+        const res = await httpRequest.get('user/get-user', { params: { userId } });
         return res;
     } catch (e) {
         console.log(e);
     }
 };
 
-export const getAllUsers = async (page) => {
+// SEARCH
+export const search = async (keyword) => {
     try {
-        const res = await httpRequest.get('user/get-all');
+        const res = await httpRequest.get('user/search', { params: { keyword } });
         return res;
     } catch (e) {
         console.log(e);
     }
 };
 
-export const handleDelete = async (userId) => {
+// GET LIST USER
+export const getUsers = async (userLoggedInId, page) => {
     try {
-        const res = await httpRequest.destroy('user/delete', {
-            data: {
-                userId,
-            },
-        });
-
+        const res = await httpRequest.get('user/get-users', { params: { userLoggedInId, page } });
         return res;
     } catch (e) {
         console.log(e);
